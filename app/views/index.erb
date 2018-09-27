@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Deep J. Shah</title>
+        <link rel="stylesheet" href="application.css" type="text/css" />
+        <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
+    </head>
+    <body>
+      <% if flash[:error] %>
+        <div class="flash-error">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <div class="flash-notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <div class="content">
+        <h1>When's the last time you saw Deep J. Shah?</h1>
+
+        <div class="picture">
+          <% url = ["https://i.imgur.com/G9YNqt3.jpg"].sample %>
+          <img src=<%= url %> />
+        </div>
+
+        <div class="witness">
+          <h3 class="witness-header">
+            Deep J. Shah was last seen <%= @last_seen || 'unknown' %> <%= @last_seen == 1 ? 'day' : 'days' %> ago.
+          </h3>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 class="witness-header">Are you with Deep J. Shah right now?</h3>
+        <h4 class="witness-header">Lucky you! Let the world know.</h4>
+
+        <form class="witness-form" method="post" action="/witness">
+
+          <select class="witness-input" type="text" name="name">
+            <option value="">-- select name --</option>
+            <option value="Abhishek">Abhishek</option>
+            <option value="Amisha">Amisha</option>
+            <option value="Navdeep">Navdeep</option>
+            <option value="Rachel">Rachel</option>
+            <option value="Ravi">Ravi</option>
+            <option value="Rohini">Rohini</option>
+            <option value="Sunny">Sunny</option>
+            <option value="Viniya">Viniya</option>
+          </select>
+
+          <br />
+          <input class="witness-submit" type="submit" value="report" />
+        </form>
+
+        <% if @witnesses.any? %>
+          <div class="divider"></div>
+
+          <h3>Recent Deep J. Shah sightings</h3>
+          <div class="last-witnessed">
+            <% @witnesses.reverse.each do |witness| %>
+              <%
+                witnessed_at = witness.witnessed_at.in_time_zone("Eastern Time (US & Canada)").strftime("%b %e %l:%M %p")
+                witnessed_by = witness.name || "anonymous"
+              %>
+              <%= "#{witnessed_at} by #{witnessed_by}" %>
+              <br />
+            <% end %>
+          </div>
+        <% end %>
+
+        <br />
+        <br />
+        Created by <a href="http://abhchand.me" target="_blank">abhchand.me</a>
+      </div>
+    </body>
+</html>
