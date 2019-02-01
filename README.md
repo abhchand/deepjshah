@@ -4,6 +4,7 @@ Create database
 psql
 create database deepjshah
 ```
+Also ensure the `DATABASE_URL` environment variable is set to the connection URL for the database created above.
 
 Bundle and Migrate
 
